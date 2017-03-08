@@ -13,6 +13,7 @@ namespace EnouFlowInstanceLib.Actions
   // 强制流程终止
   public class FlowActionTerminate : FlowAction
   {
-
+    private static EnumFlowActionRequestType requestTypeSpecialized =
+      EnumFlowActionRequestType.terminate;
   }
 }

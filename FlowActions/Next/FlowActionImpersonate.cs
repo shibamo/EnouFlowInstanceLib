@@ -12,6 +12,7 @@ namespace EnouFlowInstanceLib.Actions
 {
   public class FlowActionImpersonate : FlowAction
   {
-
+    private static EnumFlowActionRequestType requestTypeSpecialized =
+      EnumFlowActionRequestType.impersonate;
   }
 }

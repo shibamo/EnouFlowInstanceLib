@@ -73,6 +73,12 @@ namespace EnouFlowInstanceLib
         case EnumFlowActionRequestType.rejectToStart:
           return new FlowActionRejectToStart(dbObj);
 
+        case EnumFlowActionRequestType.inviteOther:
+          return new FlowActionInviteOther(dbObj);
+
+        case EnumFlowActionRequestType.inviteOtherFeedback:
+          return new FlowActionInviteOtherFeedback(dbObj);
+
         default:
           throw new Exception("Some member of EnumFlowActionRequestType not implemented !");
       }
@@ -210,6 +216,73 @@ namespace EnouFlowInstanceLib
         flowInstanceGuid, code, currentActivityGuid, connectionGuid, nextActivityGuid, roles);
 
       return createWoSave(incomingReq, db);
+    }
+
+    public static FlowActionRequest PostFlowActionInviteOther(
+      string clientRequestGuid,
+      string bizDocumentGuid,
+      string bizDocumentTypeCode,
+      DateTime bizTimeStamp,
+      string userMemo,
+      string bizDataPayloadJson,
+      string optionalFlowActionDataJson,
+      int userId, // 执行人员
+      string userGuid,
+      int flowInstanceId,
+      string flowInstanceGuid,
+      string code,
+      string currentActivityGuid, // 当前所处的活动状态(也许流程有多个入口)
+      List<Paticipant> roles,      // 接办人选择的下一个活动状态待办角色/人员列表
+      int relativeFlowTaskForUserId
+      )
+    {
+      // 未通过合法性检查直接返回
+      if (!preValidate(clientRequestGuid))
+      {
+        return null;
+      }
+
+      var incomingReq = new FlowActionInviteOther(
+        clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
+        userMemo, bizDataPayloadJson, optionalFlowActionDataJson, userId, userGuid,
+        flowInstanceId, flowInstanceGuid, code,
+        currentActivityGuid, roles, relativeFlowTaskForUserId);
+
+      return saveToDB(incomingReq);
+    }
+
+    public static FlowActionRequest PostFlowActionInviteOtherFeedback(
+      string clientRequestGuid,
+      string bizDocumentGuid,
+      string bizDocumentTypeCode,
+      DateTime bizTimeStamp,
+      string userMemo,
+      string bizDataPayloadJson,
+      string optionalFlowActionDataJson,
+      int userId, // 执行人员
+      string userGuid,
+      int flowInstanceId,
+      string flowInstanceGuid,
+      string code,
+      string currentActivityGuid, // 当前所处的活动状态
+      string connectionGuid, // 被征求意见人建议的connection
+      List<Paticipant> roles,      // 被征求意见人选择的角色/人员列表
+      int relativeFlowTaskForUserId // 被邀请者的taskid
+    )
+    {
+      // 未通过合法性检查直接返回
+      if (!preValidate(clientRequestGuid))
+      {
+        return null;
+      }
+
+      var incomingReq = new FlowActionInviteOtherFeedback(
+        clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
+        userMemo, bizDataPayloadJson, optionalFlowActionDataJson, 
+        userId, userGuid, flowInstanceId, flowInstanceGuid, code, 
+        currentActivityGuid, connectionGuid, roles, relativeFlowTaskForUserId);
+
+      return saveToDB(incomingReq);
     }
 
     private static FlowActionRequest saveToDB(FlowAction incomingReq)

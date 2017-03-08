@@ -49,7 +49,8 @@ namespace EnouFlowInstanceLib
     normal = 1,
     invitation,
     delegation,
-    redraft
+    redraft,
+    invitationFeedback,
   }
 
   public enum EnumFlowTaskState

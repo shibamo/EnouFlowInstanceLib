@@ -13,6 +13,8 @@ namespace EnouFlowInstanceLib.Actions
   // 流程开始Action
   public class FlowActionStart : FlowAction
   {
+    private static EnumFlowActionRequestType requestTypeSpecialized =
+      EnumFlowActionRequestType.start;
     public FlowActionStart(
       string clientRequestGuid,
       string bizDocumentGuid,
@@ -28,7 +30,7 @@ namespace EnouFlowInstanceLib.Actions
       string code,
       string currentActivityGuid // 当前所处的活动状态(也许流程有多个入口)
       )
-      : base(EnumFlowActionRequestType.start, clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, bizDataPayloadJson, optionalFlowActionDataJson)
+      : base(requestTypeSpecialized, clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, bizDataPayloadJson, optionalFlowActionDataJson)
     {
       dynamic concreteMetaObj = new ExpandoObject();
       concreteMetaObj.userId = userId;

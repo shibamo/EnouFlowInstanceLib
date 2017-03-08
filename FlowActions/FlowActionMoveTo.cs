@@ -13,6 +13,8 @@ namespace EnouFlowInstanceLib.Actions
   // 从当前活动节点根据选定的有向连接移动到目的活动节点
   public class FlowActionMoveTo : FlowAction
   {
+    private static EnumFlowActionRequestType requestTypeSpecialized =
+      EnumFlowActionRequestType.moveTo;
     public int userId { get; set; } // 执行操作的普通用户
     public string userGuid { get; set; }
     public string currentActivityGuid { get; set; } // 当前所处的活动状态
@@ -36,7 +38,7 @@ namespace EnouFlowInstanceLib.Actions
       string connectionGuid,      // 接办人选择的Connection
       string nextActivityGuid,    // 接办人选择的Connection指向的活动(理论上应该由FlowTemplate算出)
       List<Paticipant> roles      // 接办人选择的下一个活动状态待办角色/人员列表
-      ) : base(EnumFlowActionRequestType.moveTo, flowInstanceId, flowInstanceGuid, clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, bizDataPayloadJson, optionalFlowActionDataJson)
+      ) : base(requestTypeSpecialized, flowInstanceId, flowInstanceGuid, clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, bizDataPayloadJson, optionalFlowActionDataJson)
     {
       dynamic concreteMetaObj = new ExpandoObject();
       concreteMetaObj.bizTimeStamp = bizTimeStamp;

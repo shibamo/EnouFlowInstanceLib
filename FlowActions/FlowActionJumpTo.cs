@@ -13,6 +13,7 @@ namespace EnouFlowInstanceLib.Actions
   // 直接跳转到指定活动节点
   public class FlowActionJumpTo : FlowAction
   {
-
+    private static EnumFlowActionRequestType requestTypeSpecialized =
+      EnumFlowActionRequestType.jumpTo;
   }
 }

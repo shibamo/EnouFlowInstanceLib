@@ -142,6 +142,42 @@ namespace EnouFlowInstanceLib
     public EnumFlowTaskNotifyState taskNotifyState { get; set; } = EnumFlowTaskNotifyState.initial;
     public DateTime createTime { get; set; } = DateTime.Now;
     public DateTime? finishTime { get; set; } // 用户完成该任务的提交时间
+    // 以下为任务的自定义字段,不同任务类型(taskType)将利用这些字段
+    public int? intField_1 { get; set; }
+    public int? intField_2 { get; set; }
+    public int? intField_3 { get; set; }
+    public int? intField_4 { get; set; }
+    public int? intField_5 { get; set; }
+    public int? intField_6 { get; set; }
+    public int? intField_7 { get; set; }
+    public int? intField_8 { get; set; }
+    public int? intField_9 { get; set; }
+    public int? intField_10 { get; set; }
+    public string stringField_1 { get; set; }
+    public string stringField_2 { get; set; }
+    public string stringField_3 { get; set; }
+    public string stringField_4 { get; set; }
+    public string stringField_5 { get; set; }
+    public string stringField_6 { get; set; }
+    public string stringField_7 { get; set; }
+    public string stringField_8 { get; set; }
+    public string stringField_9 { get; set; }
+    public string stringField_10 { get; set; }
+    public decimal? decimalField_1 { get; set; }
+    public decimal? decimalField_2 { get; set; }
+    public decimal? decimalField_3 { get; set; }
+    public decimal? decimalField_4 { get; set; }
+    public decimal? decimalField_5 { get; set; }
+    public decimal? decimalField_6 { get; set; }
+    public decimal? decimalField_7 { get; set; }
+    public decimal? decimalField_8 { get; set; }
+    public decimal? decimalField_9 { get; set; }
+    public decimal? decimalField_10 { get; set; }
+    public DateTime? dateTimeField_1 { get; set; }
+    public DateTime? dateTimeField_2 { get; set; }
+    public DateTime? dateTimeField_3 { get; set; }
+    public DateTime? dateTimeField_4 { get; set; }
+    public DateTime? dateTimeField_5 { get; set; }
 
     public bool isValidToProcess()
     {
