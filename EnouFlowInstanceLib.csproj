@@ -73,7 +73,6 @@
     <Compile Include="FlowActions\FlowActionJumpTo.cs" />
     <Compile Include="FlowActions\Later\FlowActionClawback.cs" />
     <Compile Include="FlowActions\Later\FlowActionHoldUntil.cs" />
-    <Compile Include="FlowActions\Next\FlowActionFeedBackOfInvite.cs" />
     <Compile Include="FlowActions\FlowActionInviteOther.cs" />
     <Compile Include="FlowActions\Later\FlowActionTake.cs" />
     <Compile Include="FlowActions\FlowActionStart.cs" />
