@@ -363,17 +363,27 @@ namespace EnouFlowInstanceLib
       }
     }
 
-    public static FlowInstance GetFlowInstance(int id, EnouFlowInstanceContext db)
+    public static FlowInstance GetFlowInstance(int id, 
+      EnouFlowInstanceContext db)
     {
       return db.flowInstances.Find(id);
     }
 
-    public static FlowTaskForUser GetFlowTaskForUser(int id, EnouFlowInstanceContext db)
+    public static FlowInstance GetFlowInstance(string guid, 
+      EnouFlowInstanceContext db)
+    {
+      return db.flowInstances.Where(
+        obj => obj.guid == guid).FirstOrDefault();
+    }
+
+    public static FlowTaskForUser GetFlowTaskForUser(int id, 
+      EnouFlowInstanceContext db)
     {
       return db.flowTaskForUsers.Find(id);
     }
 
-    public static FlowTaskForUser GetFlowTaskForUser(string guid, EnouFlowInstanceContext db)
+    public static FlowTaskForUser GetFlowTaskForUser(string guid, 
+      EnouFlowInstanceContext db)
     {
       return db.flowTaskForUsers.Where(task=>task.guid==guid).FirstOrDefault() ;
     }
@@ -392,7 +402,8 @@ namespace EnouFlowInstanceLib
       return flowTaskForUsers;
     }
 
-    public static List<FlowTaskForUser> GetWaitingFlowTaskForUserListOfFlowInstance(
+    public static List<FlowTaskForUser> 
+      GetWaitingFlowTaskForUserListOfFlowInstance(
       int flowInstanceId, EnouFlowInstanceContext db)
     {
       List<FlowTaskForUser> flowTaskForUsers = db.flowTaskForUsers.Where(
