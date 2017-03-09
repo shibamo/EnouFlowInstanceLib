@@ -89,6 +89,7 @@ namespace EnouFlowInstanceLib
         }
       }
     }
+
     // 前序流程实例, 可能额外需要记录一些辅助信息,因此考虑不直接自连接,使用中间连接表
     // public FlowInstance prevFlowInstance { get; set; } 
     // public virtual List<FlowInstance> parents { get; set; }
@@ -128,7 +129,9 @@ namespace EnouFlowInstanceLib
     [Key]
     public int flowTaskForUserId { get; set; }
     public string guid { get; set; } = Guid.NewGuid().ToString();
-    public virtual FlowInstance flowInstance { get; set; } // 对应的FlowInstance
+    [ForeignKey("FlowInstance")]
+    public int flowInstanceId { get; set; }
+    public virtual FlowInstance FlowInstance { get; set; } // 对应的FlowInstance
     public string bizDocumentGuid { get; set; } // 对应的业务数据Guid
     public string bizDocumentTypeCode { get; set; } // 对应的业务数据类型代码
     public int userId { get; set; }
