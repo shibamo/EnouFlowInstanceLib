@@ -145,7 +145,10 @@ namespace EnouFlowInstanceLib
     public EnumFlowTaskNotifyState taskNotifyState { get; set; } = EnumFlowTaskNotifyState.initial;
     public DateTime createTime { get; set; } = DateTime.Now;
     public DateTime? finishTime { get; set; } // 用户完成该任务的提交时间
-    // 以下为任务的自定义字段,不同任务类型(taskType)将利用这些字段
+    [ForeignKey("FlowActionRequest")]
+    public int? flowActionRequestId { get; set; }
+    public virtual FlowActionRequest FlowActionRequest { get; set; } // 用户完成该任务执行的对应流程操作
+    #region 自定义字段,不同任务类型(taskType)将利用这些字段
     public int? intField_1 { get; set; }
     public int? intField_2 { get; set; }
     public int? intField_3 { get; set; }
@@ -181,7 +184,7 @@ namespace EnouFlowInstanceLib
     public DateTime? dateTimeField_3 { get; set; }
     public DateTime? dateTimeField_4 { get; set; }
     public DateTime? dateTimeField_5 { get; set; }
-
+    #endregion
     public bool isValidToProcess()
     {
       return taskState != EnumFlowTaskState.done &&
