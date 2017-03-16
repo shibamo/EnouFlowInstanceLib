@@ -218,6 +218,7 @@ namespace EnouFlowInstanceLib
       return createWoSave(incomingReq, db);
     }
 
+    // InviteOther
     public static FlowActionRequest PostFlowActionInviteOther(
       string clientRequestGuid,
       string bizDocumentGuid,
@@ -251,6 +252,7 @@ namespace EnouFlowInstanceLib
       return saveToDB(incomingReq);
     }
 
+    //InviteOtherFeedback
     public static FlowActionRequest PostFlowActionInviteOtherFeedback(
       string clientRequestGuid,
       string bizDocumentGuid,
@@ -281,6 +283,41 @@ namespace EnouFlowInstanceLib
         userMemo, bizDataPayloadJson, optionalFlowActionDataJson, 
         userId, userGuid, flowInstanceId, flowInstanceGuid, code, 
         currentActivityGuid, connectionGuid, roles, relativeFlowTaskForUserId);
+
+      return saveToDB(incomingReq);
+    }
+
+    // JumpTo
+    public static FlowActionRequest PostFlowActionJumpTo(
+      string clientRequestGuid,
+      string bizDocumentGuid,
+      string bizDocumentTypeCode,
+      DateTime bizTimeStamp,
+      string userMemo,
+      string bizDataPayloadJson,
+      string optionalFlowActionDataJson,
+      int userId, // 执行人员
+      string userGuid,
+      int flowInstanceId,
+      string flowInstanceGuid,
+      string code,
+      string currentActivityGuid, // 当前所处的活动状态
+      string nextActivityGuid,    // 接办人选择的目标活动
+      List<Paticipant> roles,     // 接办人选择的下一个活动状态待办角色/人员列表
+      bool forceJump              // 是否强制跳转, 不做时间戳有效判定
+      )
+    {
+      // 未通过合法性检查直接返回
+      if (!preValidate(clientRequestGuid))
+      {
+        return null;
+      }
+
+      var incomingReq = new FlowActionJumpTo(
+        clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
+        userMemo, bizDataPayloadJson, optionalFlowActionDataJson, userId, userGuid,
+        flowInstanceId, flowInstanceGuid, code,
+        currentActivityGuid,  nextActivityGuid, roles, forceJump);
 
       return saveToDB(incomingReq);
     }
