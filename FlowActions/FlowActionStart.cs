@@ -15,6 +15,9 @@ namespace EnouFlowInstanceLib.Actions
   {
     private static EnumFlowActionRequestType requestTypeSpecialized =
       EnumFlowActionRequestType.start;
+    public bool needGenerateTaskForUser { get; set; } = false;
+    public List<Paticipant> roles { get; set; } = null; // 待办角色/人员列表
+
     public FlowActionStart(
       string clientRequestGuid,
       string bizDocumentGuid,
@@ -28,9 +31,13 @@ namespace EnouFlowInstanceLib.Actions
       string flowTemplateGuid,
       string flowTemplateJson,  // 目前不知有无必要重复存在该数据
       string code,
-      string currentActivityGuid // 当前所处的活动状态(也许流程有多个入口)
+      string currentActivityGuid, // 当前所处的活动状态(也许流程有多个入口)
+      bool needGenerateTaskForUser = false,
+      List<Paticipant> roles = null
       )
-      : base(requestTypeSpecialized, clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, bizDataPayloadJson, optionalFlowActionDataJson)
+      : base(requestTypeSpecialized, clientRequestGuid, 
+          bizDocumentGuid, bizDocumentTypeCode, userMemo, 
+          bizDataPayloadJson, optionalFlowActionDataJson)
     {
       dynamic concreteMetaObj = new ExpandoObject();
       concreteMetaObj.userId = userId;
@@ -40,6 +47,8 @@ namespace EnouFlowInstanceLib.Actions
       concreteMetaObj.flowTemplateJson = flowTemplateJson;
       concreteMetaObj.code = code;
       concreteMetaObj.currentActivityGuid = currentActivityGuid;
+      concreteMetaObj.needGenerateTaskForUser = needGenerateTaskForUser;
+      concreteMetaObj.roles = roles;
 
       // Dynamic properties
       concreteFlowActionMetaJson =
@@ -48,7 +57,10 @@ namespace EnouFlowInstanceLib.Actions
 
     public FlowActionStart(FlowActionRequest dbObj) : base(dbObj)
     {
-
+      this.needGenerateTaskForUser = concreteMetaObj.needGenerateTaskForUser;
+      this.roles = concreteMetaObj.roles;
     }
+
+    private FlowActionStart() { }
   }
 }
