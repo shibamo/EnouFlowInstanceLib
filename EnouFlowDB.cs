@@ -109,6 +109,10 @@ namespace EnouFlowInstanceLib
     public EnumFlowActionRequestType requestType { get; set; }
     public string bizDocumentGuid { get; set; } // 对应的业务数据Guid,用于初始阶段创建流程RequestAction时无法获取flowInstanceId和guid的替代查找
     public string bizDocumentTypeCode { get; set; } // 对应的业务数据类型代码
+    public int? userId { get; set; }
+    string userGuid { get; set; }
+    public int? delegateeUserId { get; set; }
+    string delegateeUserGuid { get; set; }
     public string userMemo { get; set; }  // 用户附言或说明
     public string bizDataPayloadJson { get; set; }
     public string concreteFlowActionMetaJson { get; set; } // 用于提供具体的FlowAction对象其特定的属性集
@@ -136,6 +140,8 @@ namespace EnouFlowInstanceLib
     public string bizDocumentTypeCode { get; set; } // 对应的业务数据类型代码
     public int userId { get; set; }
     public string userGuid { get; set; }
+    public int? delegateeUserId { get; set; } // 完成任务的受托人Id,如果该任务由受托人完成则填写该字段
+    public string delegateeUserGuid { get; set; } // 完成任务的受托人Guid
     public string currentActivityGuid { get; set; }
     public DateTime bizTimeStamp { get; set; } // 收到任务时的流程实例业务时间戳
     public EnumFlowTaskType taskType { get; set; } = EnumFlowTaskType.normal;
@@ -194,39 +200,47 @@ namespace EnouFlowInstanceLib
   }
 
   [Table("Enou_FlowInstanceFriendlyLog")]
-  public class FlowInstanceFriendlyLog // 
+  public class FlowInstanceFriendlyLog // 用于向用户显示流程实例的流转过程及期间的审批信息
   {
     [Key]
     public int flowInstanceFriendlyLogId { get; set; }
     public string guid { get; set; } = Guid.NewGuid().ToString();
-    public virtual FlowInstance flowInstance { get; set; }
-    public string flowInstanceGuid { get; set; }
+    [ForeignKey("FlowInstance")]
+    public int flowInstanceId { get; set; }
+    public virtual FlowInstance FlowInstance { get; set; } // 对应的FlowInstance
     public int flowActionRequestId { get; set; }
+    public string currentActivityName { get; set; }
+    public string paticipantName { get; set; }
+    public string delegateeName { get; set; }
+    public string actionName { get; set; }
+    public string paticipantMemo { get; set; }
     public DateTime createTime { get; set; } = DateTime.Now;
 
   }
 
   [Table("Enou_FlowInstanceTechLog")]
-  public class FlowInstanceTechLog // 
+  public class FlowInstanceTechLog // 用于记录流程的详细流转过程,以便诊断调试
   {
     [Key]
     public int flowInstanceTechLogId { get; set; }
     public string guid { get; set; } = Guid.NewGuid().ToString();
-    public virtual FlowInstance flowInstance { get; set; }
-    public string flowInstanceGuid { get; set; }
+    [ForeignKey("FlowInstance")]
+    public int flowInstanceId { get; set; }
+    public virtual FlowInstance FlowInstance { get; set; } // 对应的FlowInstance
     public int flowActionRequestId { get; set; }
     public DateTime createTime { get; set; } = DateTime.Now;
 
   }
 
   [Table("Enou_FlowInstanceTracerLog")]
-  public class FlowInstanceTracerLog // 
+  public class FlowInstanceTracerLog // 用于记录流程的详细流转过程,以便在前端生成流转动画(TODO)
   {
     [Key]
     public int flowInstanceTracerLogId { get; set; }
     public string guid { get; set; } = Guid.NewGuid().ToString();
-    public virtual FlowInstance flowInstance { get; set; }
-    public string flowInstanceGuid { get; set; }
+    [ForeignKey("FlowInstance")]
+    public int flowInstanceId { get; set; }
+    public virtual FlowInstance FlowInstance { get; set; } // 对应的FlowInstance
     public int flowActionRequestId { get; set; }
     public DateTime createTime { get; set; } = DateTime.Now;
 
