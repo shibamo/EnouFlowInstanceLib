@@ -12,8 +12,6 @@ namespace EnouFlowInstanceLib.Actions
 {
   public class FlowActionTake : FlowAction
   {
-    public int userId { get; set; } // 接办人
-    public string userGuid { get; set; }
     public string flowTaskForUserId { get; set; } // 当前所处的活动状态
 
     public FlowActionTake(
@@ -28,11 +26,14 @@ namespace EnouFlowInstanceLib.Actions
       int userId,
       string userGuid,
       int flowInstanceId,
-      string flowInstanceGuid
+      string flowInstanceGuid,
+      int? delegateeUserId,
+      string delegateeUserGuid
       )
       : base(EnumFlowActionRequestType.take, flowInstanceId, flowInstanceGuid, 
           clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, 
-          bizDataPayloadJson, optionalFlowActionDataJson)
+          bizDataPayloadJson, optionalFlowActionDataJson,
+          userId, userGuid, delegateeUserId, delegateeUserGuid)
     {
       dynamic concreteMetaObj = new ExpandoObject();
       concreteMetaObj.bizTimeStamp = bizTimeStamp;
@@ -41,11 +42,13 @@ namespace EnouFlowInstanceLib.Actions
       concreteMetaObj.flowInstanceId = flowInstanceId;
       concreteMetaObj.flowInstanceGuid = flowInstanceGuid;
       concreteMetaObj.flowTaskForUserId = flowTaskForUserId;
+      concreteMetaObj.delegateeUserId = delegateeUserId;
+      concreteMetaObj.delegateeUserGuid = delegateeUserGuid;
+
       // Dynamic properties
       concreteFlowActionMetaJson =
         JsonConvert.SerializeObject(concreteMetaObj);
     }
-
 
     private FlowActionTake() { }
   }

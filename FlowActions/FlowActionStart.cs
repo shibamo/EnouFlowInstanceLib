@@ -33,11 +33,14 @@ namespace EnouFlowInstanceLib.Actions
       string code,
       string currentActivityGuid, // 当前所处的活动状态(也许流程有多个入口)
       bool needGenerateTaskForUser = false,
-      List<Paticipant> roles = null
+      List<Paticipant> roles = null,
+      int? delegateeUserId = null,
+      string delegateeUserGuid = null
       )
       : base(requestTypeSpecialized, clientRequestGuid, 
           bizDocumentGuid, bizDocumentTypeCode, userMemo, 
-          bizDataPayloadJson, optionalFlowActionDataJson)
+          bizDataPayloadJson, optionalFlowActionDataJson,
+          userId, userGuid, delegateeUserId, delegateeUserGuid)
     {
       dynamic concreteMetaObj = new ExpandoObject();
       concreteMetaObj.userId = userId;
@@ -49,6 +52,8 @@ namespace EnouFlowInstanceLib.Actions
       concreteMetaObj.currentActivityGuid = currentActivityGuid;
       concreteMetaObj.needGenerateTaskForUser = needGenerateTaskForUser;
       concreteMetaObj.roles = roles;
+      concreteMetaObj.delegateeUserId = delegateeUserId;
+      concreteMetaObj.delegateeUserGuid = delegateeUserGuid;
 
       // Dynamic properties
       concreteFlowActionMetaJson =

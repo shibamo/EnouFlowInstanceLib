@@ -110,9 +110,9 @@ namespace EnouFlowInstanceLib
     public string bizDocumentGuid { get; set; } // 对应的业务数据Guid,用于初始阶段创建流程RequestAction时无法获取flowInstanceId和guid的替代查找
     public string bizDocumentTypeCode { get; set; } // 对应的业务数据类型代码
     public int? userId { get; set; }
-    string userGuid { get; set; }
+    public string userGuid { get; set; }
     public int? delegateeUserId { get; set; }
-    string delegateeUserGuid { get; set; }
+    public string delegateeUserGuid { get; set; }
     public string userMemo { get; set; }  // 用户附言或说明
     public string bizDataPayloadJson { get; set; }
     public string concreteFlowActionMetaJson { get; set; } // 用于提供具体的FlowAction对象其特定的属性集

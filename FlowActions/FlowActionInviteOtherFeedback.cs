@@ -15,8 +15,6 @@ namespace EnouFlowInstanceLib.Actions
   {
     private static EnumFlowActionRequestType requestTypeSpecialized =
       EnumFlowActionRequestType.inviteOtherFeedback;
-    public int userId { get; set; } // 执行操作的普通用户
-    public string userGuid { get; set; }
     public string currentActivityGuid { get; set; } // 当前所处的活动状态
     public string connectionGuid { get; set; } // 被征求意见人选择的Connection
     public List<Paticipant> roles { get; set; } // 被征求意见人选择的角色/人员列表
@@ -38,8 +36,13 @@ namespace EnouFlowInstanceLib.Actions
       string currentActivityGuid, // 当前所处的活动状态
       string connectionGuid,  // 被征求意见人建议的connection
       List<Paticipant> roles,      // 被征求意见人选择的角色/人员列表
-      int relativeFlowTaskForUserId // 被邀请者的taskid
-      ) : base(requestTypeSpecialized, flowInstanceId, flowInstanceGuid, clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, bizDataPayloadJson, optionalFlowActionDataJson)
+      int relativeFlowTaskForUserId, // 被邀请者的taskid
+      int? delegateeUserId,
+      string delegateeUserGuid
+      ) : base(requestTypeSpecialized, flowInstanceId, flowInstanceGuid, 
+        clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, 
+        userMemo, bizDataPayloadJson, optionalFlowActionDataJson,
+        userId, userGuid, delegateeUserId, delegateeUserGuid)
     {
       dynamic concreteMetaObj = new ExpandoObject();
       concreteMetaObj.bizTimeStamp = bizTimeStamp;
@@ -52,6 +55,8 @@ namespace EnouFlowInstanceLib.Actions
       concreteMetaObj.connectionGuid = connectionGuid;
       concreteMetaObj.roles = roles;
       concreteMetaObj.relativeFlowTaskForUserId = relativeFlowTaskForUserId;
+      concreteMetaObj.delegateeUserId = delegateeUserId;
+      concreteMetaObj.delegateeUserGuid = delegateeUserGuid;
 
       // Dynamic properties
       concreteFlowActionMetaJson =
@@ -60,8 +65,6 @@ namespace EnouFlowInstanceLib.Actions
 
     public FlowActionInviteOtherFeedback(FlowActionRequest dbObj) : base(dbObj)
     {
-      this.userId = concreteMetaObj.userId;
-      this.userGuid = concreteMetaObj.userGuid;
       this.currentActivityGuid = concreteMetaObj.currentActivityGuid;
       this.roles = JsonConvert.DeserializeObject(
         concreteMetaObj.roles.ToString(), typeof(List<Paticipant>));

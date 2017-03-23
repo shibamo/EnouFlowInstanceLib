@@ -37,7 +37,8 @@ namespace EnouFlowInstanceLib.Actions
       ) 
       : base(requestTypeSpecialized, flowInstanceId, flowInstanceGuid, 
           clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, userMemo, 
-          bizDataPayloadJson, optionalFlowActionDataJson)
+          bizDataPayloadJson, optionalFlowActionDataJson, 
+          null,null,null,null)
     {
       dynamic concreteMetaObj = new ExpandoObject();
       concreteMetaObj.bizTimeStamp = bizTimeStamp;

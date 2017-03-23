@@ -133,7 +133,9 @@ namespace EnouFlowInstanceLib
       string currentActivityGuid, // 当前所处的活动状态(也许流程有多个入口)
       string connectionGuid,      // 接办人选择的Connection
       string nextActivityGuid,    // 接办人选择的Connection指向的活动(理论上应该由FlowTemplate算出)
-      List<Paticipant> roles      // 接办人选择的下一个活动状态待办角色/人员列表
+      List<Paticipant> roles,     // 接办人选择的下一个活动状态待办角色/人员列表
+      int? delegateeUserId,
+      string delegateeUserGuid
       )
     {
       // 未通过合法性检查直接返回
@@ -146,7 +148,8 @@ namespace EnouFlowInstanceLib
         clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode,  bizTimeStamp, 
         userMemo, bizDataPayloadJson, optionalFlowActionDataJson, userId, userGuid,
         flowInstanceId, flowInstanceGuid, code,
-        currentActivityGuid, connectionGuid, nextActivityGuid, roles);
+        currentActivityGuid, connectionGuid, nextActivityGuid, roles,
+        delegateeUserId, delegateeUserGuid);
 
       return saveToDB(incomingReq);
     }
@@ -167,7 +170,9 @@ namespace EnouFlowInstanceLib
       string code,
       string currentActivityGuid, // 当前所处的活动状态(也许流程有多个入口)
       string startActivityGuid,   // 退回到的开始状态
-      List<Paticipant> roles      // 接办人选择的下一个活动状态待办角色/人员列表
+      List<Paticipant> roles,     // 接办人选择的下一个活动状态待办角色/人员列表
+      int? delegateeUserId,
+      string delegateeUserGuid
       )
     {
       // 未通过合法性检查直接返回
@@ -179,8 +184,8 @@ namespace EnouFlowInstanceLib
       var incomingReq = new FlowActionRejectToStart(
         clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
         userMemo, bizDataPayloadJson, optionalFlowActionDataJson, userId, userGuid,
-        flowInstanceId, flowInstanceGuid, code,
-        currentActivityGuid, startActivityGuid, roles);
+        flowInstanceId, flowInstanceGuid, code, currentActivityGuid, startActivityGuid, 
+        roles, delegateeUserId, delegateeUserGuid);
 
       return saveToDB(incomingReq);
     }
@@ -234,7 +239,9 @@ namespace EnouFlowInstanceLib
       string code,
       string currentActivityGuid, // 当前所处的活动状态(也许流程有多个入口)
       List<Paticipant> roles,      // 接办人选择的下一个活动状态待办角色/人员列表
-      int relativeFlowTaskForUserId
+      int relativeFlowTaskForUserId,
+      int? delegateeUserId,
+      string delegateeUserGuid
       )
     {
       // 未通过合法性检查直接返回
@@ -246,8 +253,8 @@ namespace EnouFlowInstanceLib
       var incomingReq = new FlowActionInviteOther(
         clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
         userMemo, bizDataPayloadJson, optionalFlowActionDataJson, userId, userGuid,
-        flowInstanceId, flowInstanceGuid, code,
-        currentActivityGuid, roles, relativeFlowTaskForUserId);
+        flowInstanceId, flowInstanceGuid, code, currentActivityGuid, roles, 
+        relativeFlowTaskForUserId, delegateeUserId, delegateeUserGuid);
 
       return saveToDB(incomingReq);
     }
@@ -261,15 +268,17 @@ namespace EnouFlowInstanceLib
       string userMemo,
       string bizDataPayloadJson,
       string optionalFlowActionDataJson,
-      int userId, // 执行人员
+      int userId,                     // 执行人员
       string userGuid,
       int flowInstanceId,
       string flowInstanceGuid,
       string code,
-      string currentActivityGuid, // 当前所处的活动状态
-      string connectionGuid, // 被征求意见人建议的connection
-      List<Paticipant> roles,      // 被征求意见人选择的角色/人员列表
-      int relativeFlowTaskForUserId // 被邀请者的taskid
+      string currentActivityGuid,     // 当前所处的活动状态
+      string connectionGuid,          // 被征求意见人建议的connection
+      List<Paticipant> roles,         // 被征求意见人选择的角色/人员列表
+      int relativeFlowTaskForUserId,  // 被邀请者的taskid
+      int? delegateeUserId,
+      string delegateeUserGuid
     )
     {
       // 未通过合法性检查直接返回
@@ -282,7 +291,8 @@ namespace EnouFlowInstanceLib
         clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
         userMemo, bizDataPayloadJson, optionalFlowActionDataJson, 
         userId, userGuid, flowInstanceId, flowInstanceGuid, code, 
-        currentActivityGuid, connectionGuid, roles, relativeFlowTaskForUserId);
+        currentActivityGuid, connectionGuid, roles, relativeFlowTaskForUserId,
+        delegateeUserId, delegateeUserGuid);
 
       return saveToDB(incomingReq);
     }
@@ -304,7 +314,9 @@ namespace EnouFlowInstanceLib
       string currentActivityGuid, // 当前所处的活动状态
       string nextActivityGuid,    // 接办人选择的目标活动
       List<Paticipant> roles,     // 接办人选择的下一个活动状态待办角色/人员列表
-      bool forceJump              // 是否强制跳转, 不做时间戳有效判定
+      bool forceJump,             // 是否强制跳转, 不做时间戳有效判定
+      int? delegateeUserId,
+      string delegateeUserGuid
       )
     {
       // 未通过合法性检查直接返回
@@ -317,7 +329,8 @@ namespace EnouFlowInstanceLib
         clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
         userMemo, bizDataPayloadJson, optionalFlowActionDataJson, userId, userGuid,
         flowInstanceId, flowInstanceGuid, code,
-        currentActivityGuid,  nextActivityGuid, roles, forceJump);
+        currentActivityGuid,  nextActivityGuid, roles, forceJump,
+        delegateeUserId, delegateeUserGuid);
 
       return saveToDB(incomingReq);
     }
@@ -340,6 +353,10 @@ namespace EnouFlowInstanceLib
         dbReq.bizDataPayloadJson = incomingReq.bizDataPayloadJson;
         dbReq.concreteFlowActionMetaJson = incomingReq.concreteFlowActionMetaJson;
         dbReq.optionalFlowActionDataJson = incomingReq.optionalFlowActionDataJson;
+        dbReq.userId = incomingReq.userId;
+        dbReq.userGuid = incomingReq.userGuid;
+        dbReq.delegateeUserId = incomingReq.delegateeUserId;
+        dbReq.delegateeUserGuid = incomingReq.delegateeUserGuid;
 
         db.flowActionRequests.Add(dbReq);
         db.SaveChanges();
@@ -434,6 +451,31 @@ namespace EnouFlowInstanceLib
       {
         flowTaskForUsers = flowTaskForUsers.Where(
           task => task.isValidToProcess()).ToList();
+      }
+      else
+      {
+        flowTaskForUsers = new List<FlowTaskForUser>();
+      }
+
+      return flowTaskForUsers;
+    }
+
+    public static List<FlowTaskForUser> GetDelegatableFlowTaskForUserListOfUser(
+      string userGuid, EnouFlowInstanceContext db)
+    {
+      List<FlowTaskForUser> flowTaskForUsers = db.flowTaskForUsers.Where(
+          task => task.userGuid == userGuid &&
+          (task.taskType == EnumFlowTaskType.normal || 
+            task.taskType == EnumFlowTaskType.invitationFeedback)
+          ).ToList();
+      if (flowTaskForUsers.Count() > 0)
+      {
+        flowTaskForUsers = flowTaskForUsers.Where(
+          task => task.isValidToProcess()).ToList();
+      }
+      else
+      {
+        flowTaskForUsers = new List<FlowTaskForUser>();
       }
 
       return flowTaskForUsers;
