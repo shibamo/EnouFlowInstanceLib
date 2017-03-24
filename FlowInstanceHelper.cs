@@ -481,8 +481,7 @@ namespace EnouFlowInstanceLib
       return flowTaskForUsers;
     }
 
-    public static List<FlowTaskForUser> 
-      GetWaitingFlowTaskForUserListOfFlowInstance(
+    public static List<FlowTaskForUser> GetWaitingFlowTaskForUserListOfFlowInstance(
       int flowInstanceId, EnouFlowInstanceContext db)
     {
       List<FlowTaskForUser> flowTaskForUsers = db.flowTaskForUsers.Where(
@@ -491,6 +490,13 @@ namespace EnouFlowInstanceLib
             (task.taskType == EnumFlowTaskType.normal ||
             task.taskType == EnumFlowTaskType.redraft)).ToList();
       return flowTaskForUsers;
+    }
+
+    public static IEnumerable<FlowInstanceFriendlyLog> GetFlowInstanceFriendlyLogs(
+      int flowInstanceId, EnouFlowInstanceContext db)
+    {
+      return db.flowFriendlyLogs.Where(obj =>
+        obj.flowInstanceId == flowInstanceId).ToList();
     }
   }
 }

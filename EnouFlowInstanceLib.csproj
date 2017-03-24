@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs.cs" />
     <Compile Include="EnouFlowDB.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions.cs" />

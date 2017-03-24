@@ -216,6 +216,21 @@ namespace EnouFlowInstanceLib
     public string paticipantMemo { get; set; }
     public DateTime createTime { get; set; } = DateTime.Now;
 
+    public FlowInstanceFriendlyLogDTO convertToDTO()
+    {
+      return new FlowInstanceFriendlyLogDTO() {
+        flowInstanceFriendlyLogId = flowInstanceFriendlyLogId,
+        guid = guid,
+        flowInstanceId = flowInstanceId,
+        flowActionRequestId = flowActionRequestId,
+        currentActivityName = currentActivityName,
+        paticipantName = paticipantName,
+        delegateeName = delegateeName,
+        actionName = actionName,
+        paticipantMemo = paticipantMemo,
+        createTime = createTime.ToString("yyyy/MM/dd hh:mm")
+      };
+    }
   }
 
   [Table("Enou_FlowInstanceTechLog")]
