@@ -79,6 +79,9 @@ namespace EnouFlowInstanceLib
         case EnumFlowActionRequestType.inviteOtherFeedback:
           return new FlowActionInviteOtherFeedback(dbObj);
 
+        case EnumFlowActionRequestType.jumpTo:
+          return new FlowActionJumpTo(dbObj);
+
         default:
           throw new Exception("Some member of EnumFlowActionRequestType not implemented !");
       }
