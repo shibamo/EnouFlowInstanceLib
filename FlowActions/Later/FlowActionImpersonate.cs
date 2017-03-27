@@ -10,10 +10,9 @@ using Newtonsoft.Json;
 
 namespace EnouFlowInstanceLib.Actions
 {
-  // 强制流程终止
-  public class FlowActionTerminate : FlowAction
+  public class FlowActionImpersonate : FlowAction //Impersonate跟代理可能不同,等待出现合适的业务场景再实现
   {
     private static EnumFlowActionRequestType requestTypeSpecialized =
-      EnumFlowActionRequestType.terminate;
+      EnumFlowActionRequestType.impersonate;
   }
 }

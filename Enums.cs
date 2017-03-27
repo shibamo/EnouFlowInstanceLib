@@ -41,7 +41,8 @@ namespace EnouFlowInstanceLib
   {
     start = 1,  // 开始状态
     middle,     // 任意中间的活动处理
-    end,        // 结束状态
+    end,        // 正常结束状态
+    terminated, // 已被强行终止的状态
   }
 
   public enum EnumFlowTaskType

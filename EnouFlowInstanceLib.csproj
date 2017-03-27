@@ -65,11 +65,11 @@
     <Compile Include="FlowActions\Later\FlowActionRejectToPrevManual.cs" />
     <Compile Include="FlowActions\FlowActionRejectToStart.cs" />
     <Compile Include="FlowActions\Later\FlowActionAdjustFlowTemplate.cs" />
-    <Compile Include="FlowActions\Next\FlowActionImpersonate.cs" />
+    <Compile Include="FlowActions\Later\FlowActionImpersonate.cs" />
     <Compile Include="FlowActions\Later\FlowActionUrge.cs" />
     <Compile Include="FlowActions\Later\FlowActionRestartTo.cs" />
     <Compile Include="FlowActions\Later\FlowActionTakeover.cs" />
-    <Compile Include="FlowActions\Next\FlowActionTerminate.cs" />
+    <Compile Include="FlowActions\FlowActionTerminate.cs" />
     <Compile Include="FlowActions\Later\FlowRevokeTake.cs" />
     <Compile Include="FlowActions\FlowActionJumpTo.cs" />
     <Compile Include="FlowActions\Later\FlowActionClawback.cs" />
@@ -105,7 +105,9 @@
       <DependentUpon>201701231822271_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="FlowActions\Next\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

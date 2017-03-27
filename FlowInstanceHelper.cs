@@ -82,6 +82,9 @@ namespace EnouFlowInstanceLib
         case EnumFlowActionRequestType.jumpTo:
           return new FlowActionJumpTo(dbObj);
 
+        case EnumFlowActionRequestType.terminate:
+          return new FlowActionTerminate(dbObj);
+
         default:
           throw new Exception("Some member of EnumFlowActionRequestType not implemented !");
       }
@@ -334,6 +337,41 @@ namespace EnouFlowInstanceLib
         flowInstanceId, flowInstanceGuid, code,
         currentActivityGuid,  nextActivityGuid, roles, forceJump,
         delegateeUserId, delegateeUserGuid);
+
+      return saveToDB(incomingReq);
+    }
+
+    // Terminate
+    public static FlowActionRequest PostFlowActionTerminate(
+      string clientRequestGuid,
+      string bizDocumentGuid,
+      string bizDocumentTypeCode,
+      DateTime bizTimeStamp,
+      string userMemo,
+      string bizDataPayloadJson,
+      string optionalFlowActionDataJson,
+      int userId, // 执行人员
+      string userGuid,
+      int flowInstanceId,
+      string flowInstanceGuid,
+      string code,
+      string currentActivityGuid, // 当前所处的活动状态
+      string nextActivityGuid,    // 接办人选择的目标活动
+      int? delegateeUserId,
+      string delegateeUserGuid
+      )
+    {
+      // 未通过合法性检查直接返回
+      if (!preValidate(clientRequestGuid))
+      {
+        return null;
+      }
+
+      var incomingReq = new FlowActionTerminate(
+        clientRequestGuid, bizDocumentGuid, bizDocumentTypeCode, bizTimeStamp,
+        userMemo, bizDataPayloadJson, optionalFlowActionDataJson, userId, 
+        userGuid, flowInstanceId, flowInstanceGuid, code, currentActivityGuid, 
+        nextActivityGuid, delegateeUserId, delegateeUserGuid);
 
       return saveToDB(incomingReq);
     }
