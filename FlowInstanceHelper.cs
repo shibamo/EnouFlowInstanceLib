@@ -25,7 +25,7 @@ namespace EnouFlowInstanceLib
       }
     }
 
-    public static FlowAction GetFirtUnprocessedRequest()
+    public static FlowAction GetFirstUnprocessedRequest()
     {
       using (var db = new EnouFlowInstanceContext())
       {
@@ -39,7 +39,7 @@ namespace EnouFlowInstanceLib
       }
     }
 
-    public static FlowAction GetFirtUnprocessedRequest(
+    public static FlowAction GetFirstUnprocessedRequest(
       int flowInstanceId, EnumFlowActionRequestType[] flowActionRequestTypes)
     {
       using (var db = new EnouFlowInstanceContext())
